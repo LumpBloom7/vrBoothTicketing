@@ -1,0 +1,4 @@
+[submodule "include/cligCore"]
+	path = include/cligCore
+	url = git@github.com:LumpBloom7/cligCore.git
+	branch = develop
