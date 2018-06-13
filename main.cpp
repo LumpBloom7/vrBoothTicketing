@@ -1,20 +1,19 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <algorithm>
 #include "cligcore/clig.cpp"
-
+#include "Reservation.cpp"
 int main() {
-  std::vector<std::string> menuContent{"1. Add entry", "2. Remove entry", "3. Code Verification", "4. About",
-                                       "5. Quit"};
-
-  std::cout << "VR Booth Ticketing" << std::endl;
-  int result = cligCore::menu::createMenu( "Please select an action", menuContent, false );
-  switch ( result ) {
-  case 0:
-  case 1:
-  case 2:
-  case 3: main(); break;
-  case 4: exit( 0 );
+  while ( true ) {
+    std::vector<std::string> menuContent{"1. Add entry", "2. Code Verification", "3. About", "4. Quit"};
+    std::cout << "VR Booth Ticketing" << std::endl;
+    int result = cligCore::menu::createMenu( "Please select an action", menuContent, false );
+    switch ( result ) {
+    case 0: booth::addReservation();
+    case 1: booth::verifyCode();
+    case 2: main(); break;
+    case 3: exit( 0 );
+    }
   }
 }
