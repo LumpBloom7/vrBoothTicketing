@@ -1,4 +1,3 @@
-#include "booth.hpp"
 #include <chrono>
 #include <iomanip>
 #include <ctime>
@@ -8,9 +7,10 @@ namespace booth {
   class Reservation {
   public:
     Reservation();
-    Reservation( std::chrono::system_clock::time_point startTime, std::string name, std::string contactDetails,
-                 int computerNumber )
-        : startTime( startTime ), name( name ), contactDetails( contactDetails ), computerNumber( computerNumber ) {
+    Reservation( std::chrono::system_clock::time_point &startTime, std::string &name, std::string &contactDetails,
+                 int &computerNumber )
+        : startTime( startTime ), name( name ), contactDetails( contactDetails ), computerNumber( computerNumber ),
+          verificationCode( 0 ) {
       guestCount++;
       guestNumber = guestCount;
       endTime = startTime + std::chrono::seconds( 900 );
@@ -19,7 +19,7 @@ namespace booth {
     std::string name;
     std::chrono::system_clock::time_point startTime;
     std::string contactDetails{""};
-    int verificationCode = 0;
+    int verificationCode;
     std::chrono::system_clock::time_point endTime = startTime + std::chrono::seconds( 900 );
     int computerNumber;
     int guestNumber;
