@@ -15,11 +15,12 @@ namespace booth {
       guestNumber = guestCount;
       endTime = startTime + std::chrono::seconds( 900 );
       // Generate random verification code here.
+      for ( char i : name ) verificationCode += pow( int( i ), 2 );
     }
     std::string name;
     std::chrono::system_clock::time_point startTime;
     std::string contactDetails{""};
-    int verificationCode;
+    int verificationCode = 0;
     std::chrono::system_clock::time_point endTime = startTime + std::chrono::seconds( 900 );
     int computerNumber;
     int guestNumber;
