@@ -8,7 +8,7 @@
             "type": "shell",
             "command": "build",
             "args": [
-                "all",
+                "all"
             ],
             "group": "build",
             "presentation": {
