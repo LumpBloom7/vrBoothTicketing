@@ -1,6 +1,11 @@
 cls
+@echo off
 set "PROJECTDIR=%CD:\=/%"
+
+REM Set you compiler path here, or leave blank if already in PATH
 cd %CD:~0,2%/Compilers/MinGW64/bin/
+
+
 set "bash=%cd%/bash/"
 set "GIT=%CD:~0,2%/Software/Git/Bin/"
 
@@ -23,5 +28,5 @@ for /f %%i in ("tmpfile") do set size=%%~zi
 if %size% gtr 0 set "GITVER=%GITVER%-D"
 del tmpfile
 
-@echo off
+
 make %1 %2 -f %PROJECTDIR%/makefile OLDDIR=%PROJECTDIR% GIT_VERSION=%GITVER% GIT_COMMIT=%GITCOM% BUILD_DATE=%BUILDDATE% GIT_DATE=%GITDATE%

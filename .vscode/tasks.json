@@ -72,7 +72,7 @@
             "type": "shell",
             "command": "build",
             "args": [
-                "main.o"
+                "object"
             ],
             "group": "build",
             "presentation": {

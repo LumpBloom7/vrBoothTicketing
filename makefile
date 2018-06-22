@@ -6,8 +6,8 @@ CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
 strip    = strip.exe
-OBJ      = $(OLDDIR)/main.o
-LINKOBJ  = $(OLDDIR)/main.o
+OBJ      = $(OLDDIR)/obj/main.o
+LINKOBJ  = $(OLDDIR)/obj/main.o
 #-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 LIBS     = -g3 -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 INCS     =
@@ -26,8 +26,11 @@ all: all-before $(BIN) all-after
 clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
+executable: $(bin)
+object: $(OBJ)
+
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-main.o: $(OLDDIR)/main.cpp
-	$(CPP) -c $(OLDDIR)/main.cpp -o $(OLDDIR)/main.o $(CXXFLAGS)
+$(OBJ): $(OLDDIR)/main.cpp
+	$(CPP) -c $(OLDDIR)/main.cpp -o $(OBJ) $(CXXFLAGS)
