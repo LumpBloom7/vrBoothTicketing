@@ -1,5 +1,6 @@
-#Folders
-.vscode/
+#VSCODE FILES
+.vscode/c_cpp_properties.json
+.vscode/settings.json
 
 
 # Compiled Object files
@@ -30,4 +31,3 @@
 *.exe
 *.out
 *.app
-*.bat
