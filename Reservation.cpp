@@ -1,6 +1,7 @@
 #include <chrono>
 #include <iomanip>
 #include <ctime>
+#include <cmath>
 
 namespace booth {
   int guestCount = 0;
