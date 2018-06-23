@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Executable",
+            "label": "Compile",
             "type": "shell",
             "command": "build",
             "args": [
@@ -29,7 +29,7 @@
             "type": "shell",
             "command": "build",
             "args": [
-                "clean",
+                "clean"
             ],
             "group": "build",
             "presentation": {
@@ -52,27 +52,6 @@
             "args": [
                 "clean",
                 "all"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                {
-                    "base": "$gcc",
-                    "fileLocation": "absolute"
-                }
-            ]
-        },
-        {
-            "label": "Build object file only",
-            "type": "shell",
-            "command": "build",
-            "args": [
-                "object"
             ],
             "group": "build",
             "presentation": {

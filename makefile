@@ -14,7 +14,7 @@ INCS     =
 CXXINCS  = -I $(PROJECTDIR)/include/
 OUTPUTDIR = $(PROJECTDIR)/bin/
 BIN      = $(OUTPUTDIR)/Output.exe
-CXXFLAGS = $(CXXINCS) $(GITDETAILS) -Ofast -std=c++17 -w -pedantic
+CXXFLAGS = $(CXXINCS) $(GITDETAILS) -Ofast -std=c++17 -w -Wall -Wextra -pedantic
 CFLAGS   = $(INCS)
 RM       = rm.exe -f
 
