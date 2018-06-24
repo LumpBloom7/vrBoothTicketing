@@ -127,7 +127,6 @@ namespace booth {
     logFile( "Entered verification screen.", 0 );
     cligCore::console::clear();
     logFile( "Requesting user input.", 1 );
-    std::string input;
     int userNumber;
     std::cout << "Please enter your user number: " << termcolor::green << std::flush;
     std::cin >> userNumber;
