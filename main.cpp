@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <fstream>
 
-void logFile( std::string logMessage, int depth );
+void logFile( std::string &logMessage, int depth );
 #include "cligcore/clig.cpp"
 #include "Reservation.cpp"
 
