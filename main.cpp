@@ -2,11 +2,24 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
+void logFile( std::string logMessage, int depth );
 #include "cligcore/clig.cpp"
 #include "Reservation.cpp"
 
+std::ofstream flog( "runtime.log" );
+bool justStarted = true;
+
+void logFile( std::string &logMessage, int depth ) {
+  std::string indent = "";
+  for ( int i = 0; i < depth; i++ ) indent += "  ";
+  std::time_t logTime = std::chrono::system_clock::to_time_t( std::chrono::system_clock::now() );
+  flog << std::put_time( std::localtime( &logTime ), "%H:%M:%S" ) << " - " << indent << logMessage << std::endl;
+}
+
 void about() {
+  logFile( "Entered about screen.", 0 );
   cligCore::console::clear();
   std::string tmp;
   std::cout << "Booth ticketing system for CHKL 2018 Festival" << std::endl
@@ -19,8 +32,14 @@ void about() {
             << "Build Date: " << BUILD_DATE << std::endl;
 
   std::getline( std::cin, tmp );
+  logFile( "About screen closed.", 0 );
 }
 int main() {
+  if ( justStarted ) {
+    logFile( "Program started", 0 );
+    justStarted = false;
+  }
+  logFile( "Main menu shown.", 0 );
   while ( true ) {
     std::vector<std::string> menuContent{"1. Add entry", "2. Code Verification", "3. About", "4. Quit"};
     std::cout << "VR Booth Ticketing" << std::endl;
