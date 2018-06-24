@@ -4,14 +4,14 @@
 #include <algorithm>
 #include <fstream>
 
-void logFile( std::string &logMessage, int depth );
+void logFile( const std::string &logMessage, int depth );
 #include "cligcore/clig.cpp"
 #include "Reservation.cpp"
 
 std::ofstream flog( "runtime.log" );
 bool justStarted = true;
 
-void logFile( std::string &logMessage, int depth ) {
+void logFile( const std::string &logMessage, int depth ) {
   std::string indent = "";
   for ( int i = 0; i < depth; i++ ) indent += "  ";
   std::time_t logTime = std::chrono::system_clock::to_time_t( std::chrono::system_clock::now() );
