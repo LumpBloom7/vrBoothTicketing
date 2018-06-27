@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <ctime>
 #include <cmath>
+#include <cstdlib>
 
 namespace booth {
   int guestCount = 0;
@@ -79,6 +80,27 @@ namespace booth {
       startTime = currentTime;
     else
       startTime = computers[ smallestNumber ][ computers[ smallestNumber ].size() - 1 ].endTime;
+
+    // Check to see if we still have time.
+    auto tmp = startTime + std::chrono::seconds( 900 );
+    std::time_t tmp2 = std::chrono::system_clock::to_time_t( tmp );
+    struct tm temp;
+    localtime_s( &temp, &tmp2 );
+    int h = temp.tm_hour;
+    int m = temp.tm_min - 15;
+    int dt = tmp2;
+    if ( !( ( h > 8 && h < 11 ) || ( h == 11 && m < 20 ) ) ) {
+      logFile( "Could not assign time slot for user.(Outside of operating range)", 1 );
+      logFile( "Reservation failed!", 0 );
+      cligCore::console::clear();
+      std::cin.ignore();
+      std::cout << termcolor::red << "Reservation failed!" << std::endl
+                << "We only allow reservations between 8 and 11:30." << std::endl
+                << "Sorry for the inconvenience caused." << std::endl;
+      std::string t;
+      std::getline( std::cin, t );
+      return;
+    }
     logFile( "Successfully assigned time slot for user.", 1 );
     logFile( "Placing user data into \"Reservation\" data type", 1 );
     Reservation guest = Reservation( startTime, name, contactDetails, smallestNumber );
