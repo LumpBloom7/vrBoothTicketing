@@ -84,9 +84,10 @@ namespace booth {
     // Check to see if we still have time.
     auto tmp = startTime + std::chrono::seconds( 900 );
     std::time_t tmp2 = std::chrono::system_clock::to_time_t( tmp );
-    struct tm *temp = localtime( &tmp2 );
-    int h = temp->tm_hour;
-    int m = temp->tm_min - 15;
+    struct tm temp;
+    localtime_s( &temp, &tmp2 );
+    int h = temp.tm_hour;
+    int m = temp.tm_min - 15;
     int dt = tmp2;
     if ( !( ( h > 8 && h < 11 ) || ( h == 11 && m < 20 ) ) ) {
       logFile( "Could not assign time slot for user.(Outside of operating range)", 1 );
