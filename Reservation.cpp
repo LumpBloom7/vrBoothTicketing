@@ -8,7 +8,7 @@ namespace booth {
   int guestCount = 0;
   class Reservation {
   public:
-    Reservation();
+    Reservation() {}
     Reservation( std::chrono::system_clock::time_point &startTime, std::string &name, std::string &contactDetails,
                  int &computerNumber )
         : startTime( startTime ), name( name ), contactDetails( contactDetails ), computerNumber( computerNumber ),
@@ -32,10 +32,33 @@ namespace booth {
     std::chrono::system_clock::time_point endTime = startTime + std::chrono::seconds( 900 );
     int computerNumber;
     int guestNumber;
+    template <class Archive> void serialize( Archive &archive ) {
+      archive( CEREAL_NVP( name ), CEREAL_NVP( startTime ), CEREAL_NVP( contactDetails ),
+               CEREAL_NVP( verificationCode ), CEREAL_NVP( endTime ), CEREAL_NVP( computerNumber ),
+               CEREAL_NVP( guestNumber ) );
+    }
   };
   std::vector<Reservation> guests{};
   std::vector<std::vector<Reservation>> computers = std::vector<std::vector<Reservation>>( 4 );
+  void save() {
+    std::ofstream os( "computers.json" );
+    cereal::JSONOutputArchive archive( os );
+    archive( CEREAL_NVP( computers[ 0 ] ), CEREAL_NVP( computers[ 1 ] ), CEREAL_NVP( computers[ 2 ] ),
+             CEREAL_NVP( computers[ 3 ] ) );
 
+    std::ofstream os2( "guests.json" );
+    cereal::JSONOutputArchive archive2( os2 );
+    archive2( CEREAL_NVP( guests ) );
+  }
+  void load() {
+    std::ifstream is( "computers.json" );
+    cereal::JSONInputArchive archive( is );
+    archive( CEREAL_NVP( computers[ 0 ] ), CEREAL_NVP( computers[ 1 ] ), CEREAL_NVP( computers[ 2 ] ),
+             CEREAL_NVP( computers[ 3 ] ) );
+    std::ifstream is2( "guests.json" );
+    cereal::JSONInputArchive archive2( is2 );
+    archive2( CEREAL_NVP( guests ) );
+  }
   void addReservation() {
     logFile( "Entered reservation screen.", 0 );
     cligCore::console::clear();
@@ -89,7 +112,7 @@ namespace booth {
     int h = temp.tm_hour;
     int m = temp.tm_min - 15;
     int dt = tmp2;
-    if ( !( ( h > 8 && h < 11 ) || ( h == 11 && m < 20 ) ) ) {
+    if ( ( ( h > 8 && h < 11 ) || ( h == 11 && m < 20 ) ) ) {
       logFile( "Could not assign time slot for user.(Outside of operating range)", 1 );
       logFile( "Reservation failed!", 0 );
       cligCore::console::clear();
@@ -128,8 +151,9 @@ namespace booth {
               << "It is recommended that you arrive at least 5 minutes before your start time." << std::endl
               << "Failure to arrive on time may result in your play session being shorter" << std::endl;
     std::cin.ignore();
-    std::cin.ignore();
+    std::getline( std::cin, contactDetails );
     logFile( "Reservation successful!", 0 );
+    save();
   }
   int inputCheck() {
     if ( std::cin.fail() ) {

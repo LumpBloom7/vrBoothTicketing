@@ -5,6 +5,11 @@
 #include <fstream>
 
 void logFile( const std::string &logMessage, int depth );
+#include "cereal/types/vector.hpp"
+#include "cereal/types/chrono.hpp"
+#include "cereal/types/string.hpp"
+#include "cereal/archives/json.hpp"
+
 #include "cligcore/clig.cpp"
 #include "Reservation.cpp"
 
@@ -35,6 +40,8 @@ void about() {
   logFile( "About screen closed.", 0 );
 }
 int main() {
+  if ( cligCore::filesystem::fileExists( "computers.json" ) && cligCore::filesystem::fileExists( "guests.json" ) )
+    booth::load();
   if ( justStarted ) {
     logFile( "Program started", 0 );
     justStarted = false;
